@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { navigate } from 'vike/client/router'
+import { useDataManager } from '../contexts/DataManagerContext'
 
 export function Landing() {
   const [partyA, setPartyA] = useState('')
   const [partyB, setPartyB] = useState('')
+  const { setData } = useDataManager()
 
   useEffect(() => {
     // Check if data exists in localStorage
@@ -31,14 +33,12 @@ export function Landing() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (partyA && partyB) {
-      localStorage.setItem(
-        'bananaData',
-        JSON.stringify({
-          partyAName: partyA,
-          partyBName: partyB,
-          assets: [],
-        })
-      )
+      const initialData = {
+        partyAName: partyA,
+        partyBName: partyB,
+        assets: [],
+      }
+      setData(initialData)
       navigate('/dashboard')
     }
   }

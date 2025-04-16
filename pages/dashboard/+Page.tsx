@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import ActionButtons from '../../components/ActionButtons'
 import AssetsTable from '../../components/AssetsTable'
 import ImportModal from '../../components/ImportModal'
@@ -6,23 +6,26 @@ import Notification from '../../components/Notification'
 import PartyInformation from '../../components/PartyInformation'
 import PDFTemplate from '../../components/PDFTemplate'
 import TotalAllocations from '../../components/TotalAllocations'
-import { useAssets } from '../../hooks/useAssets'
-import { useCalculations } from '../../hooks/useCalculations'
+import { useDataManager } from '../../contexts/DataManagerContext'
 import { useFileHandling } from '../../hooks/useFileHandling'
-import { StoredData, useLocalStorage } from '../../hooks/useLocalStorage'
-import { usePartyNames } from '../../hooks/usePartyNames'
 import { generateAssetDivisionPDF } from '../../utils/pdfGenerator'
 
 export function Page() {
-  const { data, setData, saveData, showNotification, setShowNotification } = useLocalStorage('bananaData', {
-    partyAName: '',
-    partyBName: '',
-    assets: [],
-  })
-
-  const { partyAName, partyBName, setPartyAName, setPartyBName } = usePartyNames(data.partyAName, data.partyBName)
-
-  const { assets, addAsset, deleteAsset, updateAsset } = useAssets(data.assets)
+  const {
+    partyAName,
+    partyBName,
+    setPartyAName,
+    setPartyBName,
+    assets,
+    addAsset,
+    deleteAsset,
+    updateAsset,
+    calculatePartyATotal,
+    calculatePartyBTotal,
+    setData,
+    showNotification,
+    setShowNotification,
+  } = useDataManager()
 
   const {
     fileInputRef,
@@ -34,26 +37,15 @@ export function Page() {
     triggerFileInput,
   } = useFileHandling(setData)
 
-  const { calculatePartyATotal, calculatePartyBTotal } = useCalculations(assets)
-
   const [isImportModalOpen, setIsImportModalOpen] = useState(false)
-
   const templateRef = useRef<HTMLDivElement>(null)
-
-  // Debounced save
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      saveData({ partyAName, partyBName, assets })
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [partyAName, partyBName, assets, saveData])
 
   const handleImport = useCallback(() => {
     setIsImportModalOpen(true)
   }, [])
 
   const handleImportData = useCallback(
-    (importedData: StoredData) => {
+    (importedData: any) => {
       setData(importedData)
       setShowNotification(true)
     },

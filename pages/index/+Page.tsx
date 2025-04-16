@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import ActionButtons from '../../components/ActionButtons'
 import AssetsTable from '../../components/AssetsTable'
+import ImportModal from '../../components/ImportModal'
 import Notification from '../../components/Notification'
 import PartyInformation from '../../components/PartyInformation'
 import TotalAllocations from '../../components/TotalAllocations'
@@ -101,6 +102,74 @@ const useLocalStorage = (key: string, initialData: StoredData) => {
   return { data, setData, saveData, showNotification, setShowNotification }
 }
 
+// Custom hook for file handling
+const useFileHandling = (setData: (data: StoredData) => void) => {
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [isDragging, setIsDragging] = useState(false)
+
+  const handleFileSelect = useCallback(
+    (file: File) => {
+      const reader = new FileReader()
+      reader.onload = (event) => {
+        try {
+          const jsonData = JSON.parse(event.target?.result as string)
+          setData(jsonData)
+        } catch (error) {
+          console.error('Error parsing JSON file:', error)
+          alert('Invalid JSON file format')
+        }
+      }
+      reader.readAsText(file)
+    },
+    [setData]
+  )
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(true)
+  }, [])
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(false)
+  }, [])
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault()
+      setIsDragging(false)
+
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFileSelect(e.dataTransfer.files[0])
+      }
+    },
+    [handleFileSelect]
+  )
+
+  const handleFileInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleFileSelect(e.target.files[0])
+      }
+    },
+    [handleFileSelect]
+  )
+
+  const triggerFileInput = useCallback(() => {
+    fileInputRef.current?.click()
+  }, [])
+
+  return {
+    fileInputRef,
+    isDragging,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileInputChange,
+    triggerFileInput,
+  }
+}
+
 export default function IndexPage() {
   const { data, setData, saveData, showNotification, setShowNotification } = useLocalStorage('assetSplitterData', {
     partyAName: '',
@@ -111,6 +180,18 @@ export default function IndexPage() {
   const { partyAName, partyBName, setPartyAName, setPartyBName } = usePartyNames(data.partyAName, data.partyBName)
 
   const { assets, addAsset, deleteAsset, updateAsset } = useAssets(data.assets)
+
+  const {
+    fileInputRef,
+    isDragging,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileInputChange,
+    triggerFileInput,
+  } = useFileHandling(setData)
+
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false)
 
   // Debounced save
   useEffect(() => {
@@ -129,14 +210,36 @@ export default function IndexPage() {
   }, [assets])
 
   const handleImport = useCallback(() => {
-    // TODO: Implement JSON import functionality
-    console.log('Import JSON')
+    setIsImportModalOpen(true)
   }, [])
 
+  const handleImportData = useCallback(
+    (importedData: StoredData) => {
+      setData(importedData)
+      setShowNotification(true)
+    },
+    [setData, setShowNotification]
+  )
+
   const handleExport = useCallback(() => {
-    // TODO: Implement JSON export functionality
-    console.log('Export JSON')
-  }, [])
+    const dataToExport = {
+      partyAName,
+      partyBName,
+      assets,
+    }
+
+    const jsonString = JSON.stringify(dataToExport, null, 2)
+    const blob = new Blob([jsonString], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'asset-splitter-data.json'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }, [partyAName, partyBName, assets])
 
   const handleGeneratePDF = useCallback(() => {
     const doc = generateAssetDivisionPDF({
@@ -177,10 +280,22 @@ export default function IndexPage() {
           partyBName={partyBName}
         />
 
+        <div
+          className={`border-2 border-dashed rounded-lg p-6 text-center ${isDragging ? 'border-primary bg-primary/10' : 'border-base-300'}`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <input type="file" ref={fileInputRef} onChange={handleFileInputChange} accept=".json" className="hidden" />
+          <p className="text-base-content/70">Drag and drop a JSON file here or click the Import button</p>
+        </div>
+
         <ActionButtons onImport={handleImport} onExport={handleExport} onGeneratePDF={handleGeneratePDF} />
       </form>
 
       <Notification message="Changes saved" isVisible={showNotification} onClose={() => setShowNotification(false)} />
+
+      <ImportModal isOpen={isImportModalOpen} onClose={() => setIsImportModalOpen(false)} onImport={handleImportData} />
     </div>
   )
 }

@@ -1,0 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+* This is a vike.dev project with React, DaisyUI, Tailwind, and deployment to Cloudflare
+* Check [README.md](mdc:README.md) for project structure
+* use semantic Daisy classes, not named colors

@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import ActionButtons from '../../components/ActionButtons'
 import AssetsTable from '../../components/AssetsTable'
 import ImportModal from '../../components/ImportModal'
 import Notification from '../../components/Notification'
 import PartyInformation from '../../components/PartyInformation'
+import PDFTemplate from '../../components/PDFTemplate'
 import TotalAllocations from '../../components/TotalAllocations'
 import { useAssets } from '../../hooks/useAssets'
 import { useCalculations } from '../../hooks/useCalculations'
@@ -36,6 +37,8 @@ export default function IndexPage() {
   const { calculatePartyATotal, calculatePartyBTotal } = useCalculations(assets)
 
   const [isImportModalOpen, setIsImportModalOpen] = useState(false)
+
+  const templateRef = useRef<HTMLDivElement>(null)
 
   // Debounced save
   useEffect(() => {
@@ -78,14 +81,24 @@ export default function IndexPage() {
   }, [partyAName, partyBName, assets])
 
   const handleGeneratePDF = useCallback(() => {
-    const doc = generateAssetDivisionPDF({
+    const template = (
+      <PDFTemplate
+        partyAName={partyAName}
+        partyBName={partyBName}
+        assets={assets}
+        partyATotal={calculatePartyATotal()}
+        partyBTotal={calculatePartyBTotal()}
+      />
+    )
+
+    generateAssetDivisionPDF({
       partyAName,
       partyBName,
       assets,
       partyATotal: calculatePartyATotal(),
       partyBTotal: calculatePartyBTotal(),
+      template,
     })
-    doc.save('asset-division-summary.pdf')
   }, [partyAName, partyBName, assets, calculatePartyATotal, calculatePartyBTotal])
 
   return (

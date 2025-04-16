@@ -29,6 +29,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.3.0",
     "@vitejs/plugin-react": "^4.3.4",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",

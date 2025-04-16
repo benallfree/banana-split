@@ -1,4 +1,24 @@
 {
+  "name": "banana-split",
+  "version": "0.0.1",
+  "description": "Joint peitition asset splitting helper",
+  "author": {
+    "name": "Ben Allfree",
+    "url": "https://x.com/benallfree"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/benallfree/banana-split",
+  "homepage": "https://bananna-split.benallfree.com",
+  "keywords": [
+    "joint",
+    "peitition",
+    "asset",
+    "splitting",
+    "helper",
+    "divorce",
+    "divorce lawyer",
+    "family law"
+  ],
   "scripts": {
     "dev": "vike dev",
     "build": "vike build",

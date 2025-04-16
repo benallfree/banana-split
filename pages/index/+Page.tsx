@@ -152,9 +152,21 @@ export default function IndexPage() {
           onPartyBNameChange={setPartyBName}
         />
 
-        <AssetsTable assets={assets} onAddAsset={addAsset} onDeleteAsset={deleteAsset} onUpdateAsset={updateAsset} />
+        <AssetsTable
+          assets={assets}
+          onAddAsset={addAsset}
+          onDeleteAsset={deleteAsset}
+          onUpdateAsset={updateAsset}
+          partyAName={partyAName}
+          partyBName={partyBName}
+        />
 
-        <TotalAllocations partyATotal={calculatePartyATotal()} partyBTotal={calculatePartyBTotal()} />
+        <TotalAllocations
+          partyATotal={calculatePartyATotal()}
+          partyBTotal={calculatePartyBTotal()}
+          partyAName={partyAName}
+          partyBName={partyBName}
+        />
 
         <ActionButtons onImport={handleImport} onExport={handleExport} onGeneratePDF={handleGeneratePDF} />
       </form>

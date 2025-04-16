@@ -11,9 +11,18 @@ interface AssetsTableProps {
   onAddAsset: () => void
   onDeleteAsset: (id: string) => void
   onUpdateAsset: (asset: Asset) => void
+  partyAName: string
+  partyBName: string
 }
 
-export default function AssetsTable({ assets, onAddAsset, onDeleteAsset, onUpdateAsset }: AssetsTableProps) {
+export default function AssetsTable({
+  assets,
+  onAddAsset,
+  onDeleteAsset,
+  onUpdateAsset,
+  partyAName,
+  partyBName,
+}: AssetsTableProps) {
   return (
     <section className="card bg-base-200 p-6">
       <div className="flex justify-between items-center mb-4">
@@ -28,8 +37,8 @@ export default function AssetsTable({ assets, onAddAsset, onDeleteAsset, onUpdat
             <tr>
               <th>Asset Name</th>
               <th>Value</th>
-              <th>Party A %</th>
-              <th>Party B %</th>
+              <th>{partyAName || 'Party A'} %</th>
+              <th>{partyBName || 'Party B'} %</th>
               <th>Actions</th>
             </tr>
           </thead>

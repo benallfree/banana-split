@@ -11,6 +11,7 @@ interface Asset {
   value: number
   partyAPercentage: number
   partyBPercentage: number
+  allocationType: 'split' | 'partyA' | 'partyB'
 }
 
 interface StoredData {
@@ -35,6 +36,7 @@ const useAssets = (initialAssets: Asset[] = []) => {
       value: 0,
       partyAPercentage: 50,
       partyBPercentage: 50,
+      allocationType: 'split',
     }
     setAssets((prev) => [...prev, newAsset])
   }, [])

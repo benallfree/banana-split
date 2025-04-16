@@ -4,6 +4,7 @@ interface Asset {
   value: number
   partyAPercentage: number
   partyBPercentage: number
+  allocationType: 'split' | 'partyA' | 'partyB'
 }
 
 interface AssetsTableProps {
@@ -23,6 +24,21 @@ export default function AssetsTable({
   partyAName,
   partyBName,
 }: AssetsTableProps) {
+  const handleAllocationTypeChange = (asset: Asset, newType: 'split' | 'partyA' | 'partyB') => {
+    const updatedAsset = { ...asset, allocationType: newType }
+    if (newType === 'partyA') {
+      updatedAsset.partyAPercentage = 100
+      updatedAsset.partyBPercentage = 0
+    } else if (newType === 'partyB') {
+      updatedAsset.partyAPercentage = 0
+      updatedAsset.partyBPercentage = 100
+    } else {
+      updatedAsset.partyAPercentage = 50
+      updatedAsset.partyBPercentage = 50
+    }
+    onUpdateAsset(updatedAsset)
+  }
+
   return (
     <section className="card bg-base-200 p-6">
       <div className="flex justify-between items-center mb-4">
@@ -37,8 +53,13 @@ export default function AssetsTable({
             <tr>
               <th>Asset Name</th>
               <th>Value</th>
-              <th>{partyAName || 'Party A'} %</th>
-              <th>{partyBName || 'Party B'} %</th>
+              <th>Allocation</th>
+              {assets.some((asset) => asset.allocationType === 'split') && (
+                <>
+                  <th>{partyAName || 'Party A'} %</th>
+                  <th>{partyBName || 'Party B'} %</th>
+                </>
+              )}
               <th>Actions</th>
             </tr>
           </thead>
@@ -62,31 +83,64 @@ export default function AssetsTable({
                   />
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    className="input input-bordered input-sm w-full"
-                    value={asset.partyAPercentage}
-                    onChange={(e) =>
-                      onUpdateAsset({
-                        ...asset,
-                        partyAPercentage: Number(e.target.value),
-                      })
-                    }
-                  />
+                  <div className="join">
+                    <button
+                      type="button"
+                      className={`join-item btn btn-sm ${asset.allocationType === 'partyA' ? 'btn-primary' : 'btn-ghost'}`}
+                      onClick={() => handleAllocationTypeChange(asset, 'partyA')}
+                    >
+                      {partyAName || 'Party A'} Takes
+                    </button>
+                    <button
+                      type="button"
+                      className={`join-item btn btn-sm ${asset.allocationType === 'partyB' ? 'btn-primary' : 'btn-ghost'}`}
+                      onClick={() => handleAllocationTypeChange(asset, 'partyB')}
+                    >
+                      {partyBName || 'Party B'} Takes
+                    </button>
+                    <button
+                      type="button"
+                      className={`join-item btn btn-sm ${asset.allocationType === 'split' ? 'btn-primary' : 'btn-ghost'}`}
+                      onClick={() => handleAllocationTypeChange(asset, 'split')}
+                    >
+                      Split
+                    </button>
+                  </div>
                 </td>
-                <td>
-                  <input
-                    type="number"
-                    className="input input-bordered input-sm w-full"
-                    value={asset.partyBPercentage}
-                    onChange={(e) =>
-                      onUpdateAsset({
-                        ...asset,
-                        partyBPercentage: Number(e.target.value),
-                      })
-                    }
-                  />
-                </td>
+                {asset.allocationType === 'split' && (
+                  <>
+                    <td>
+                      <input
+                        type="number"
+                        className="input input-bordered input-sm w-full"
+                        value={asset.partyAPercentage}
+                        onChange={(e) =>
+                          onUpdateAsset({
+                            ...asset,
+                            partyAPercentage: Number(e.target.value),
+                            partyBPercentage: 100 - Number(e.target.value),
+                            allocationType: 'split',
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        className="input input-bordered input-sm w-full"
+                        value={asset.partyBPercentage}
+                        onChange={(e) =>
+                          onUpdateAsset({
+                            ...asset,
+                            partyBPercentage: Number(e.target.value),
+                            partyAPercentage: 100 - Number(e.target.value),
+                            allocationType: 'split',
+                          })
+                        }
+                      />
+                    </td>
+                  </>
+                )}
                 <td>
                   <button className="btn btn-error btn-sm" onClick={() => onDeleteAsset(asset.id)}>
                     Delete

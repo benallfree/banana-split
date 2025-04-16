@@ -9,7 +9,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <div className={'flex max-w-5xl m-auto flex-grow'}>
+      <div className={'flex w-full max-w-5xl mx-auto flex-grow px-4 sm:px-6 lg:px-8'}>
         <Content>{children}</Content>
       </div>
     </div>
@@ -26,8 +26,8 @@ function Sidebar({ children }: { children: React.ReactNode }) {
 
 function Content({ children }: { children: React.ReactNode }) {
   return (
-    <div id="page-container">
-      <div id="page-content" className={'p-5 pb-12 min-h-screen'}>
+    <div id="page-container" className="w-full">
+      <div id="page-content" className={'py-4 sm:py-6 min-h-screen'}>
         {children}
       </div>
     </div>

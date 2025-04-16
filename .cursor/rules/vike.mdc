@@ -1,6 +1,0 @@
----
-description: 
-globs: *.tsx
-alwaysApply: false
----
-* In Vike, +Page.tsx is the index file

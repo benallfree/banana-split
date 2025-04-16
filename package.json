@@ -29,12 +29,14 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "vike": "^0.4.228",
     "@vitejs/plugin-react": "^4.3.4",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "vike-react": "^0.6.1",
-    "vike-cloudflare": "^0.1.7"
+    "vike": "^0.4.228",
+    "vike-cloudflare": "^0.1.7",
+    "vike-react": "^0.6.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250414.0",

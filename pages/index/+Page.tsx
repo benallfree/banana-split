@@ -4,6 +4,7 @@ import AssetsTable from '../../components/AssetsTable'
 import Notification from '../../components/Notification'
 import PartyInformation from '../../components/PartyInformation'
 import TotalAllocations from '../../components/TotalAllocations'
+import { generateAssetDivisionPDF } from '../../utils/pdfGenerator'
 
 interface Asset {
   id: string
@@ -138,9 +139,15 @@ export default function IndexPage() {
   }, [])
 
   const handleGeneratePDF = useCallback(() => {
-    // TODO: Implement PDF generation functionality
-    console.log('Generate PDF')
-  }, [])
+    const doc = generateAssetDivisionPDF({
+      partyAName,
+      partyBName,
+      assets,
+      partyATotal: calculatePartyATotal(),
+      partyBTotal: calculatePartyBTotal(),
+    })
+    doc.save('asset-division-summary.pdf')
+  }, [partyAName, partyBName, assets, calculatePartyATotal, calculatePartyBTotal])
 
   return (
     <div className="container mx-auto p-4">

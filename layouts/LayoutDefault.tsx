@@ -3,11 +3,15 @@ import './style.css'
 import './tailwind.css'
 
 import logoUrl from '../assets/logo.svg'
+import Navbar from '../components/Navbar'
 
 export default function LayoutDefault({ children }: { children: React.ReactNode }) {
   return (
-    <div className={'flex max-w-5xl m-auto'}>
-      <Content>{children}</Content>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className={'flex max-w-5xl m-auto flex-grow'}>
+        <Content>{children}</Content>
+      </div>
     </div>
   )
 }

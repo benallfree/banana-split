@@ -119,6 +119,30 @@ export function Landing() {
               <p className="text-2xl font-semibold mb-2">10 assets free, $99 for life</p>
               <p className="text-lg">Update early and often</p>
             </div>
+
+            <div className="mt-8 grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <a
+                href="https://buy.polar.sh/polar_cl_uYCk1m4tm0hoDUwGSsHvVprn1yzb5jAwgN72T2HxdnK"
+                className="card bg-primary text-primary-content p-6 hover:bg-primary-focus transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h3 className="text-xl font-bold mb-2">Founder's Edition</h3>
+                <p className="text-2xl font-bold">$9.99</p>
+                <p className="text-sm mt-2">Limited to 100 users</p>
+              </a>
+
+              <a
+                href="https://buy.polar.sh/polar_cl_nD96G5nqGcrVzvgpVcT2PPsUOdZduCRmKLy3f4co2pF"
+                className="card bg-secondary text-secondary-content p-6 hover:bg-secondary-focus transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h3 className="text-xl font-bold mb-2">Lifetime Membership</h3>
+                <p className="text-2xl font-bold">$99</p>
+                <p className="text-sm mt-2">One-time payment, lifetime access</p>
+              </a>
+            </div>
           </div>
         </div>
       </div>

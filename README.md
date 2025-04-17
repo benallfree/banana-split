@@ -1,52 +1,66 @@
-Generated with [vike.dev/new](https://vike.dev/new) ([version 429](https://www.npmjs.com/package/create-vike/v/0.0.429)) using this command:
+# Banana Split 🍌
 
-```sh
-bun create vike@latest --react --tailwindcss --daisyui --cloudflare --prettier
-```
+Banana Split is an open-source tool designed to help couples navigate the process of dividing community property during an uncontested divorce. Our goal is to make this challenging process more manageable, transparent, and fair for both parties.
 
-## Contents
+## Purpose
 
-- [React](#react)
+Divorce is difficult enough without the added stress of dividing assets. Banana Split helps by:
 
-  - [`/pages/+config.ts`](#pagesconfigts)
-  - [Routing](#routing)
-  - [`/pages/_error/+Page.jsx`](#pages_errorpagejsx)
-  - [`/pages/+onPageTransitionStart.ts` and `/pages/+onPageTransitionEnd.ts`](#pagesonpagetransitionstartts-and-pagesonpagetransitionendts)
-  - [SSR](#ssr)
-  - [HTML Streaming](#html-streaming)
+- Providing a clear, organized way to list and value community property
+- Allowing flexible asset allocation (100% to one party, split percentages, etc.)
+- Generating professional PDF documentation of the agreed division
+- Keeping all data local to your browser for privacy
+- Supporting import/export of your asset division plan
 
-## React
+## Security & Privacy
 
-This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
+Your privacy is our top priority:
 
-### `/pages/+config.ts`
+- All data is stored locally in your browser - nothing is sent to our servers
+- No account or personal information required
+- No tracking or analytics
+- No data collection or sharing with third parties
+- Generated PDFs are created entirely in your browser
 
-Such `+` files are [the interface](https://vike.dev/config) between Vike and your code. It defines:
+## Important Disclaimer
 
-- A default [`<Layout>` component](https://vike.dev/Layout) (that wraps your [`<Page>` components](https://vike.dev/Page)).
-- A default [`title`](https://vike.dev/title).
-- Global [`<head>` tags](https://vike.dev/head-tags).
+Banana Split is not a substitute for legal advice. We strongly recommend:
 
-### Routing
+- Consulting with qualified legal professionals
+- Understanding your state's specific community property laws
+- Having your agreement reviewed by legal counsel before finalizing
 
-[Vike's built-in router](https://vike.dev/routing) lets you choose between:
+## Usage
 
-- [Filesystem Routing](https://vike.dev/filesystem-routing) (the URL of a page is determined based on where its `+Page.jsx` file is located on the filesystem)
-- [Route Strings](https://vike.dev/route-string)
-- [Route Functions](https://vike.dev/route-function)
+1. Enter both parties' names
+2. Add your community property assets with values
+3. Allocate assets between parties
+4. Export your plan as a PDF or JSON file
+5. Share with your legal counsel for review
 
-### `/pages/_error/+Page.jsx`
+## Technical Details
 
-The [error page](https://vike.dev/error-page) which is rendered when errors occur.
+For developers interested in contributing or understanding the technical implementation:
 
-### `/pages/+onPageTransitionStart.ts` and `/pages/+onPageTransitionEnd.ts`
+- Built with React, Vike, and DaisyUI
+- Deployed on Cloudflare Pages
+- Open source under MIT license
+- Local storage for data persistence
+- PDF generation using @react-pdf/renderer
 
-The [`onPageTransitionStart()` hook](https://vike.dev/onPageTransitionStart), together with [`onPageTransitionEnd()`](https://vike.dev/onPageTransitionEnd), enables you to implement page transition animations.
+## Contributing
 
-### SSR
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all your pages or only for some pages.
+## License
 
-### HTML Streaming
+MIT License - See [LICENSE](LICENSE) for details.
 
-You can enable/disable [HTML streaming](https://vike.dev/stream) for all your pages, or only for some pages while still using it for others.
+## Support
+
+If you find this tool helpful, please consider:
+
+- Starring the repository
+- Sharing with others who might benefit
+- Contributing improvements or bug fixes
+- Following the author on [X](https://x.com/benallfree)

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { navigate } from 'vike/client/router'
+import logoUrl from '../assets/logo.svg'
 import { useDataManager } from '../contexts/DataManagerContext'
 
 export function Landing() {
@@ -48,7 +49,7 @@ export function Landing() {
       <div className="hero bg-base-200 py-16">
         <div className="hero-content text-center">
           <div className="max-w-2xl">
-            <img src="/assets/logo.svg" alt="Banana Split Logo" className="w-40 h-40 mx-auto mb-6" />
+            <img src={logoUrl} alt="Banana Split Logo" className="w-40 h-40 mx-auto mb-6" />
             <h1 className="text-6xl font-bold mb-4">Banana Split</h1>
             <p className="text-2xl mb-4">Manage Your Marital Assets Together</p>
             <div className="badge badge-accent badge-lg">Beta</div>

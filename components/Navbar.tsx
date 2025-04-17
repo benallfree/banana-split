@@ -1,4 +1,5 @@
 import * as React from 'react'
+import logoUrl from '../assets/logo.svg'
 import { DiscordIcon, GithubIcon, XIcon } from './GithubIcon'
 
 const Navbar: React.FC = () => {
@@ -15,7 +16,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center">
             {!isLandingPage && (
               <a href="/" className="flex-shrink-0 flex items-center">
-                <img src="/assets/logo.svg" height={40} width={40} alt="logo" />
+                <img src={logoUrl} height={40} width={40} alt="logo" />
               </a>
             )}
           </div>

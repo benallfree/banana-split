@@ -23,6 +23,8 @@ interface DataManagerContextType {
   updateAsset: (asset: Asset) => void
   calculatePartyATotal: () => number
   calculatePartyBTotal: () => number
+  showMembershipModal: boolean
+  setShowMembershipModal: (show: boolean) => void
 }
 
 const DataManagerContext = createContext<DataManagerContextType | null>(null)
@@ -34,6 +36,7 @@ export function DataManagerProvider({ children }: { children: ReactNode }) {
     assets: [],
   })
   const [showNotification, setShowNotification] = useState(false)
+  const [showMembershipModal, setShowMembershipModal] = useState(false)
   const [partyAName, setPartyAName] = useState('')
   const [partyBName, setPartyBName] = useState('')
   const [assets, setAssets] = useState<Asset[]>([])
@@ -62,6 +65,11 @@ export function DataManagerProvider({ children }: { children: ReactNode }) {
 
   // Asset management
   const addAsset = useCallback(() => {
+    if (assets.length >= 10) {
+      setShowMembershipModal(true)
+      return
+    }
+
     const newAsset: Asset = {
       id: crypto.randomUUID(),
       name: '',
@@ -71,7 +79,7 @@ export function DataManagerProvider({ children }: { children: ReactNode }) {
       allocationType: 'split',
     }
     setAssets((prev) => [...prev, newAsset])
-  }, [])
+  }, [assets.length])
 
   const deleteAsset = useCallback((id: string) => {
     setAssets((prev) => prev.filter((asset) => asset.id !== id))
@@ -114,6 +122,8 @@ export function DataManagerProvider({ children }: { children: ReactNode }) {
     updateAsset,
     calculatePartyATotal,
     calculatePartyBTotal,
+    showMembershipModal,
+    setShowMembershipModal,
   }
 
   return <DataManagerContext.Provider value={value}>{children}</DataManagerContext.Provider>

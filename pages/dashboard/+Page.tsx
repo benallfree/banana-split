@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 import ActionButtons from '../../components/ActionButtons'
 import AssetsTable from '../../components/AssetsTable'
 import ImportModal from '../../components/ImportModal'
+import MembershipModal from '../../components/MembershipModal'
 import Notification from '../../components/Notification'
 import PartyInformation from '../../components/PartyInformation'
 import PDFTemplate from '../../components/PDFTemplate'
@@ -25,6 +26,8 @@ export function Page() {
     setData,
     showNotification,
     setShowNotification,
+    showMembershipModal,
+    setShowMembershipModal,
   } = useDataManager()
 
   const {
@@ -137,6 +140,8 @@ export function Page() {
       <Notification message="Changes saved" isVisible={showNotification} onClose={() => setShowNotification(false)} />
 
       <ImportModal isOpen={isImportModalOpen} onClose={() => setIsImportModalOpen(false)} onImport={handleImportData} />
+
+      <MembershipModal isOpen={showMembershipModal} onClose={() => setShowMembershipModal(false)} />
     </div>
   )
 }

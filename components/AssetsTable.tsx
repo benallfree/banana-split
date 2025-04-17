@@ -160,13 +160,9 @@ export default function AssetsTable({
               <th>Asset Name</th>
               <th>Value</th>
               <th className="min-w-[300px]">Allocation</th>
-              {assets.some((asset) => asset.allocationType === 'split') && (
-                <>
-                  <th>{partyAName || 'Party A'} %</th>
-                  <th>{partyBName || 'Party B'} %</th>
-                </>
-              )}
-              <th>Actions</th>
+              <th>{partyAName || 'Party A'} %</th>
+              <th>{partyBName || 'Party B'} %</th>
+              <th className="w-[100px]">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -213,42 +209,46 @@ export default function AssetsTable({
                     </button>
                   </div>
                 </td>
-                {asset.allocationType === 'split' && (
-                  <>
-                    <td className="pl-4">
-                      <input
-                        type="number"
-                        className="input input-bordered input-sm w-full"
-                        value={asset.partyAPercentage}
-                        onChange={(e) =>
-                          onUpdateAsset({
-                            ...asset,
-                            partyAPercentage: Number(e.target.value),
-                            partyBPercentage: 100 - Number(e.target.value),
-                            allocationType: 'split',
-                          })
-                        }
-                      />
-                    </td>
-                    <td className="pl-4">
-                      <input
-                        type="number"
-                        className="input input-bordered input-sm w-full"
-                        value={asset.partyBPercentage}
-                        onChange={(e) =>
-                          onUpdateAsset({
-                            ...asset,
-                            partyBPercentage: Number(e.target.value),
-                            partyAPercentage: 100 - Number(e.target.value),
-                            allocationType: 'split',
-                          })
-                        }
-                      />
-                    </td>
-                  </>
-                )}
+                <td className="pl-4">
+                  {asset.allocationType === 'split' ? (
+                    <input
+                      type="number"
+                      className="input input-bordered input-sm w-full"
+                      value={asset.partyAPercentage}
+                      onChange={(e) =>
+                        onUpdateAsset({
+                          ...asset,
+                          partyAPercentage: Number(e.target.value),
+                          partyBPercentage: 100 - Number(e.target.value),
+                          allocationType: 'split',
+                        })
+                      }
+                    />
+                  ) : (
+                    <div className="h-[32px]" />
+                  )}
+                </td>
+                <td className="pl-4">
+                  {asset.allocationType === 'split' ? (
+                    <input
+                      type="number"
+                      className="input input-bordered input-sm w-full"
+                      value={asset.partyBPercentage}
+                      onChange={(e) =>
+                        onUpdateAsset({
+                          ...asset,
+                          partyBPercentage: Number(e.target.value),
+                          partyAPercentage: 100 - Number(e.target.value),
+                          allocationType: 'split',
+                        })
+                      }
+                    />
+                  ) : (
+                    <div className="h-[32px]" />
+                  )}
+                </td>
                 <td>
-                  <button className="btn btn-error btn-sm" onClick={() => onDeleteAsset(asset.id)}>
+                  <button className="btn btn-error btn-sm w-full" onClick={() => onDeleteAsset(asset.id)}>
                     Delete
                   </button>
                 </td>

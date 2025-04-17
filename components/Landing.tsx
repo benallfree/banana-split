@@ -20,11 +20,6 @@ export function Landing() {
         // Pre-populate form with existing data
         if (parsedData.partyAName) setPartyA(parsedData.partyAName)
         if (parsedData.partyBName) setPartyB(parsedData.partyBName)
-
-        // Only redirect if not in debug mode
-        if (!isDebug) {
-          navigate('/dashboard')
-        }
       } catch (error) {
         console.error('Error parsing stored data:', error)
       }
@@ -49,7 +44,9 @@ export function Landing() {
       <div className="hero bg-base-200 py-16">
         <div className="hero-content text-center">
           <div className="max-w-2xl">
-            <img src={logoUrl} alt="Banana Split Logo" className="w-40 h-40 mx-auto mb-6" />
+            <a href="/" className="inline-block">
+              <img src={logoUrl} alt="Banana Split Logo" className="w-40 h-40 mx-auto mb-6" />
+            </a>
             <h1 className="text-6xl font-bold mb-4">Banana Split</h1>
             <p className="text-2xl mb-4">Manage Your Marital Assets Together</p>
             <div className="badge badge-accent badge-lg">Beta</div>

@@ -11,7 +11,7 @@ export default {
 
   // https://vike.dev/head-tags
   title: 'Banana Split',
-  description: 'Joint petition asset splitting helper',
+  description: 'Joint petition asset planning helper',
 
   extends: vikeReact,
 } satisfies Config

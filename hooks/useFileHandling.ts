@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
-import { StoredData } from './useLocalStorage'
+import { StoredData } from '../contexts/DataManagerContext'
 
 export const useFileHandling = (setData: (data: StoredData) => void) => {
   const fileInputRef = useRef<HTMLInputElement>(null)

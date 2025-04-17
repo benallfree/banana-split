@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react'
-import { Asset } from '../hooks/useAssets'
+import { Asset } from '../utils/pdfGenerator'
 
 export interface StoredData {
   partyAName: string

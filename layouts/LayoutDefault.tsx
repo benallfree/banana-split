@@ -3,6 +3,7 @@ import './style.css'
 import './tailwind.css'
 
 import logoUrl from '../assets/logo.svg'
+import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { DataManagerProvider } from '../contexts/DataManagerContext'
 
@@ -14,6 +15,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
         <div className={'flex w-full max-w-5xl mx-auto flex-grow px-4 sm:px-6 lg:px-8'}>
           <Content>{children}</Content>
         </div>
+        <Footer />
       </div>
     </DataManagerProvider>
   )

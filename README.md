@@ -2,6 +2,8 @@
 
 Banana Split is an open-source tool designed to help couples navigate the process of dividing community property during an uncontested divorce. Our goal is to make this challenging process more manageable, transparent, and fair for both parties.
 
+https://github.com/user-attachments/assets/0d25f82a-d868-4dad-a31a-aff6cc60bb27
+
 ## Purpose
 
 Divorce is difficult enough without the added stress of dividing assets. Banana Split helps by:

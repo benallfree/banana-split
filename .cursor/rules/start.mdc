@@ -4,7 +4,8 @@ globs:
 alwaysApply: true
 ---
 * This is a vike.dev project with React, DaisyUI, Tailwind, and deployment to Cloudflare
+* Check [README.md](mdc:README.md) for project structure
 * use semantic Daisy classes, not named colors
-* this application is about helping uncontested divorcing couples split their community assets
+* this application is about helping uncontested divorcing couples plan their community assets
 * Bun is our package manager
 * When creating pages or routing, consult the Vike.dev documentation.
